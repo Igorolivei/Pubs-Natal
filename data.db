@@ -1,0 +1,122 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: bar; Type: TABLE; Schema: public; Owner: navi; Tablespace: 
+--
+
+CREATE TABLE bar (
+    id integer,
+    nome character varying(255),
+    cnpj bigint,
+    descricao text,
+    data_de_fundacao date
+);
+
+
+ALTER TABLE public.bar OWNER TO navi;
+
+--
+-- Name: contatos; Type: TABLE; Schema: public; Owner: navi; Tablespace: 
+--
+
+CREATE TABLE contatos (
+    id integer,
+    responsavel character varying(100),
+    email character varying(100),
+    website character varying(100),
+    telefone1 bigint,
+    telefone2 bigint
+);
+
+
+ALTER TABLE public.contatos OWNER TO navi;
+
+--
+-- Name: endereco; Type: TABLE; Schema: public; Owner: navi; Tablespace: 
+--
+
+CREATE TABLE endereco (
+    id integer,
+    end_rua character varying(150),
+    end_num integer,
+    end_bairro character varying(50),
+    end_cidade character varying(50),
+    end_uf character varying(2),
+    cep integer
+);
+
+
+ALTER TABLE public.endereco OWNER TO navi;
+
+--
+-- Data for Name: bar; Type: TABLE DATA; Schema: public; Owner: navi
+--
+
+COPY bar (id, nome, cnpj, descricao, data_de_fundacao) FROM stdin;
+1	BardaEsquina	1202039103	Bem Ali	2014-10-29
+2	6em.	123214124	MeiaHora	2013-12-12
+3	Jazzy	121123124	Rocks	2011-02-16
+\.
+
+
+--
+-- Data for Name: contatos; Type: TABLE DATA; Schema: public; Owner: navi
+--
+
+COPY contatos (id, responsavel, email, website, telefone1, telefone2) FROM stdin;
+1	Aleksei	z@m.com	g10.com	84200129	12123412
+\.
+
+
+--
+-- Data for Name: endereco; Type: TABLE DATA; Schema: public; Owner: navi
+--
+
+COPY endereco (id, end_rua, end_num, end_bairro, end_cidade, end_uf, cep) FROM stdin;
+1	Rua avenida	8009	Mirassol	Natal	RN	59046843
+\.
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
