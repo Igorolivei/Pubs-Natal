@@ -1,29 +1,15 @@
-<h1>Edite seu produto</h1>
+<h1>Edite seu bar</h1>
 
-<% @produtos_editar.each do |produto| %>
-<form action="/produtos_editar" method="post" >
-	<input name="id_editar" value="<%=produto.id%>" type="hidden" />
-	Nome: <input type="text" name="nome_editar" value="<%=produto.nome%>"/>
-	Preço: <input type="text" name="preco_editar" value="<%=produto.preco%>"/>
-	Ano: <input type="text" name="ano" value="<%=produto.ano%>"/>
-	Artista:
-	<select name="artista">
-		<% @artistas.each do |a| %>
-			<option value="<%= a.id %>"><%=a.nome%></option>
-		<% end %>
-	</select>
-	Gênero:
-	<select name="genero">
-		<% @generos.each do |g| %> 
-			<option value="<%= g.id %>"><%= g.genero.capitalize %></option>
-		<% end %>
-	</select>
-	Tipo:
-	<select name="tipo">
-		<% @tipos.each do |t| %> 
-			<option value="<%= t.id %>"><%= t.tipo %></option>
-		<% end %>
-	</select>
+<% @bares_editar.each do |bar| %>
+<form action="/bares_editar" method="post" >
+	<input name="id_editar" value="<%=bar.IdBar%>" type="hidden" />
+	Nome: <input type="text" name="nome_editar" value="<%=bar.Nome%>"/>
+	Descrição: <input type="text" name="descricao_editar" value="<%=bar.Descricao%>"/>
+	Endereço: <input type="text" name="endereco_editar" value="<%=bar.Endereco%>"/>
+	Telefone: <input type="text" name="telefone_editar" value="<%=bar.Telefone%>"/>
+	Email: <input type="text" name="email_editar" value="<%=bar.Email%>"/>
+	Dias de funcionamento: <input type="text" name="diasfunc_editar" value="<%=bar.DiasFunc%>"/>
+
 	<input type="submit" value="Salvar" />
 </form>
 <% end %>

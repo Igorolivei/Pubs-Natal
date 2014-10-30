@@ -1,2 +1,2 @@
-class Bar < ActiveRecord::Base
+class Bares < ActiveRecord::Base
 end

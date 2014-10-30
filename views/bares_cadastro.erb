@@ -1,9 +1,12 @@
-<h1>Cadastre aqui um novo cliente</h1>
+<h1>Cadastre aqui um novo bar</h1>
 
-<form action="/cliente_cadastro" method="post" >
+<form action="/bares_cadastro" method="post" >
 	Nome: <input type="text" name="nome"/>
+	Descrição: <input type="text" name="descricao"/>
+	Endereço: <input type="text" name="endereco"/>
+	Telefone: <input type="text" name="telefone"/>
 	E-mail: <input type="text" name="email"/>
-	Senha: <input type="password" name="senha"/>
-	Confirmação de senha: <input type="password" name="confirma_senha"/>
+	Dias de funcionamento: <input type="text" name="diasfunc"/>
+	
 	<input type="submit" value="Cadastrar" />
 </form>

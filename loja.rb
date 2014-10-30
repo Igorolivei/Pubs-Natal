@@ -5,7 +5,7 @@ require './eventos.rb'
 #require 'file'
 require 'fileutils'
 
-ActiveRecord::Base.establish_connection(:adapter => 'postgres', :database => './bares.kexi')
+ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => './bares.db')
 
 enable :sessions
 
@@ -28,9 +28,9 @@ get '/bares_cadastro' do
 end
 
 post '/bares_cadastro' do
-  @novo_bar = Bares.new(:nome => params[:nome], :preco => params[:preco], :ano => params[:ano], :id_artista => params[:artista], :id_tipo => params[:tipo], :id_genero => params[:genero])
+  @novo_bar = Bares.new(:Nome => params[:nome], :Descricao => params[:descricao], :Endereco => params[:endereco], :Telefone => params[:telefone], :Email => params[:email], :DiasFunc => params[:diasfunc])
   #FileUtils.cp(params[:file][:tempfile], "public/")
-  @novo_produto.save
+  @novo_bar.save
 
   #FileUtils.cp(params['imagem'][:tempfile].path, "./public/#{@novo_produto.id}.jpg")
   #redirect '/'
@@ -40,14 +40,18 @@ end
 
 get '/bares_editar' do
   @bares = Bares.all
-  @bares_editar = Produto.where("id IN (?)", params[:id_editar])
+  @bares_editar = Bares.where("IdBar IN (?)", params[:id_editar])
   erb :bares_editar
 end
 
 post '/bares_editar' do
   @bares = Bares.find(params[:id_editar])
-  @bares.nome = params[:nome_editar]
-  @bares.preco = params[:preco_editar]
+  @bares.Nome = params[:nome_editar]
+  @bares.Descricao = params[:descricao_editar]
+  @bares.Endereco = params[:endereco_editar]
+  @bares.Telefone = params[:telefone_editar]
+  @bares.Email = params[:email_editar]
+  @bares.DiasFunc = params[:diasfunc_editar]
   @bares.save
 
   redirect '/bares_lista'
