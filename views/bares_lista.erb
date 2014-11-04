@@ -7,10 +7,14 @@
 		<input name="busca" type="text"/>
 		<input type="submit" value="buscar"/>
 	</form>
+	<!-- O each do funciona de forma semelhante ao "for". Enquanto houver dados na lista, ele repete e lê a próxima variável (bar) da lista.-->
 	<% @bares.each do |bar| %>
 		<li>
+			<!-- Exibe o nome da variável bar. -->
 			Nome: <%= bar.Nome.capitalize %><br/>
+			<!-- Exibe a descrição da variável bar. -->
 			Descrição: <%= bar.Descricao.capitalize %><br/>
+			<!-- E assim por diante. -->
 			Endereço: <%= bar.Endereco.capitalize %><br/>
 			Telefone: <%= bar.Telefone %><br/>
 			Email: <%= bar.Email %><br/>

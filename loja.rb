@@ -5,15 +5,20 @@ require './eventos.rb'
 #require 'file'
 require 'fileutils'
 
+#Faz a conexão com o banco de dados. adapter informa qual o banco de dados, e database informa o nome do arquivo do banco de dados.
 ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => './bares.db')
 
 enable :sessions
 
+#informa qual a ação na "raiz" do site (quando tiver só o endereço mesmo. www.nomedosite.com/)
 get '/' do
+	#aponta qual o arquivo erb (html com código ruby) vai ser exibido na "raiz" do site
 	erb :inicio
 end
 
+#informa qual a ação na página "sobre" do site (quando tiver só o endereço mesmo. www.nomedosite.com/sobre)
 get '/sobre' do
+	#aponta qual o arquivo erb (html com código ruby) vai ser exibido na página "sobre" do site
 	erb :sobre
 end
 
@@ -27,24 +32,27 @@ get '/bares_cadastro' do
   erb :bares_cadastro
 end
 
+#função que controla o método post do form bares_cadastro (na página bares_cadastro)
 post '/bares_cadastro' do
+  #Cria uma nova variável do tipo "bares" e atribui os valores dos campos (params[:nome_do_campo] se refere ao campo nome_do_campo no form bares_cadastro
   @novo_bar = Bares.new(:Nome => params[:nome], :Descricao => params[:descricao], :Endereco => params[:endereco], :Telefone => params[:telefone], :Email => params[:email], :DiasFunc => params[:diasfunc])
-  #FileUtils.cp(params[:file][:tempfile], "public/")
+  #salva a variável no banco
   @novo_bar.save
 
-  #FileUtils.cp(params['imagem'][:tempfile].path, "./public/#{@novo_produto.id}.jpg")
-  #redirect '/'
-  
+  #redireciona para a lista de bares
   redirect '/bares_lista'
 end
 
 get '/bares_editar' do
+  #cria uma variável que recebe todos os dados da tabela bares (a classe Bares se refere à tabela bares do banco de dados)
   @bares = Bares.all
+  #pesquisa um dado específico (onde o if for params[:id_editar], que é um campo oculto no html
   @bares_editar = Bares.where("IdBar IN (?)", params[:id_editar])
   erb :bares_editar
 end
 
 post '/bares_editar' do
+  #pesquisa o dado pelo id específico passado como parâmetro
   @bares = Bares.find(params[:id_editar])
   @bares.Nome = params[:nome_editar]
   @bares.Descricao = params[:descricao_editar]
@@ -58,6 +66,7 @@ post '/bares_editar' do
 end
 
 post '/bares_remover' do
+  #procura o dado pelo id, e exclui permanentemente da tabela
   @bares = Bares.find(params[:id_remover]).destroy
 
   redirect '/bares_lista'
@@ -124,6 +133,6 @@ get "/bares_busca" do
 
   @bares_busca = params[:busca]
 
-  erb :bares_busca
+  erb :bares_lista
 end
 
