@@ -1,15 +1,28 @@
-<h1>Edite seu bar</h1>
-
-<% @bares_editar.each do |bar| %>
-<form action="/bares_editar" method="post" >
-	<input name="id_editar" value="<%=bar.IdBar%>" type="hidden" />
-	Nome: <input type="text" name="nome_editar" value="<%=bar.Nome%>"/>
-	Descrição: <input type="text" name="descricao_editar" value="<%=bar.Descricao%>"/>
-	Endereço: <input type="text" name="endereco_editar" value="<%=bar.Endereco%>"/>
-	Telefone: <input type="text" name="telefone_editar" value="<%=bar.Telefone%>"/>
-	Email: <input type="text" name="email_editar" value="<%=bar.Email%>"/>
-	Dias de funcionamento: <input type="text" name="diasfunc_editar" value="<%=bar.DiasFunc%>"/>
-
-	<input type="submit" value="Salvar" />
-</form>
-<% end %>
+			<div id="main-wrapper">
+				<div class="container">
+					<div class="row">
+						<div class="8u">
+							<!-- Content -->
+								<article class="box post">
+									<a href="#" class="image featured"><img src="/pic01.jpg" alt="" /></a>
+									<header>
+										<h2>Cadastre um novo bar</h2>
+										</header>
+											<% @bares_editar.each do |bar| %>
+											<form action="/bares_editar" method="post" >
+												<input name="id_editar" value="<%=bar.IdBar%>" type="hidden" />
+												Nome: <input type="text" name="nome_editar" value="<%=bar.Nome%>"/>
+												Descrição: <textarea name="descricao_editar" rows="2"><%=bar.Descricao%></textarea>
+												Endereço: <input type="text" name="endereco_editar" value="<%=bar.Endereco%>"/>
+												Telefone: <input type="text" name="telefone_editar" value="<%=bar.Telefone%>"/>
+												Email: <input type="text" name="email_editar" value="<%=bar.Email%>"/>
+												Dias de funcionamento: <input type="text" name="diasfunc_editar" value="<%=bar.DiasFunc%>"/>
+												Horário de funcionamento: <input type="number" name="hinicio" min="0" max="23" size="2" maxlength="2" value="<%=bar.Hinicio%>">h às <input type="number" name="hfim" min="0" max="23" size="2" maxlength="2" value="<%=bar.Hfim%>">h <br />
+												<input type="submit" value="Salvar" />
+											</form>
+											<% end %>
+								</article>
+						</div>
+					</div>
+				</div>
+			</div>

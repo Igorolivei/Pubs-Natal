@@ -1,21 +1,82 @@
+<!DOCTYPE HTML>
+
+<%# coding: UTF-8 %>
+<!--
+	Dopetrope by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html>
-<head>
-	<META Http-Equiv="Cache-Control" Content="no-cache"/> 
-	<META Http-Equiv="Pragma" Content="no-cache"/> 
-	<META Http-Equiv="Expires" Content="0"/>
-	<title>Minha Lojinha: A lojinha que é minha</title>
-</head>
-<body>
-<div>
-	<a href="/">Início</a>
-	<a href="/bares_lista">Bares</a>
-	<a href="/bares_cadastro">Cadastro de bares</a>
-	<a href="/sobre">Sobre</a>
-		<%if session[:admin_logado] != nil && session[:admin_logado] != [] || session[:cliente_logado] != nil && session[:cliente_logado] != []%>
-		<a href="/logout">Logout</a>
-	<%end%>
-</div>
-	<!-- o "yield" significa que só é necessário criar o conteúdo do body no restante das páginas. as tags anteriores se repetem. -->
-	<%= yield %>
-</body>
+	<head>
+		<title>Pubs Natal</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/jquery.dropotron.min.js"></script>
+		<script src="/js/skel.min.js"></script>
+		<script src="/js/skel-layers.min.js"></script>
+		<script src="/js/init.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="/css/skel.css" type="text/css" />
+			<link rel="stylesheet" href="/css/style.css" type="text/css" />
+			<link rel="stylesheet" href="/css/style-desktop.css" type="text/css" />
+		</noscript>
+		<script>
+			function selectLoad(element)
+			{
+			    document.getElementById("div"+element.id).className = "current";
+			    
+			}
+		</script>
+		<%# coding: UTF-8 %>
+	</head>
+	<body class="homepage">
+
+		<!-- Header -->
+			<div id="header-wrapper">
+				<div id="header" style="background-image: url(/pic01.jpg) no-repeat 0 50%; height: 100%; width: 100%;">
+					
+					<!-- Logo -->
+						<h1><a href="/" >Pubs Natal</a></h1>
+					
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li id="divinicio"><a id="inicio" onclick="selectLoad(this)" href="/">Inicio</a></li>
+								<li id="divlista"><a id="lista" onclick="selectLoad(this)" href="/bares_lista">Pubs e Bares</a></li>
+								<!--<li id="login"><a href="no-sidebar.html">Login</a></li>-->
+								<li id="divsobre"><a id="sobre" onclick="selectLoad(this)" href="/sobre">Sobre</a></li>
+							</ul>
+						</nav>
+				</div>
+			</div>
+		<%# coding: UTF-8 %>
+		<%= yield %>
+
+		<!-- Footer -->
+			<div id="footer-wrapper">
+				<section id="footer" class="container">
+					<div class="row">
+						<div class="8u">
+							
+						</div>
+					</div>
+					<div class="row">
+						<div class="12u">
+						
+							<!-- Copyright -->
+								<div id="copyright">
+									<ul class="links">
+										<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+									</ul>
+								</div>
+
+						</div>
+					</div>
+				</section>
+			</div>
+
+	</body>
 </html>

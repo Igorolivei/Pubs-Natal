@@ -1,12 +1,30 @@
-<h1>Cadastre aqui um novo bar</h1>
-
-<form action="/bares_cadastro" method="post" >
-	Nome: <input type="text" name="nome"/>
-	Descrição: <input type="text" name="descricao"/>
-	Endereço: <input type="text" name="endereco"/>
-	Telefone: <input type="text" name="telefone"/>
-	E-mail: <input type="text" name="email"/>
-	Dias de funcionamento: <input type="text" name="diasfunc"/>
-	
-	<input type="submit" value="Cadastrar" />
-</form>
+<!--			<script>
+			$(function() {
+			    $("#myform").validator();
+			}); pattern="^(\d{3}-|\(\d{3}\)\s)\d{2}-\d{4}$" -->
+			</script>
+			<div id="main-wrapper">
+				<div class="container">
+					<div class="row">
+						<div class="12u">
+							<!-- Content -->
+								<article class="box post">
+									<a href="#" class="image featured"><img src="/pic01.jpg" alt="" /></a>
+									<header>
+										<h2>Cadastre um novo bar</h2>
+										</header>
+											<form id="myform" action="/bares_cadastro" method="post" >
+												Nome: <input type="text" name="nome"/>
+												Descrição: <textarea rows="2" name="descricao"></textarea>
+												Endereço: <input type="text" name="endereco"/>
+												Telefone: <input type="text" name="telefone" placeholder="(DDD)0000-0000"/>
+												E-mail: <input type="text" name="email"/>
+												Dias de funcionamento: <input type="text" name="diasfunc"/>
+												Horário de funcionamento: <input type="number" name="hinicio" min="0" max="23" size="2" maxlength="2">h às <input type="number" name="hfim" min="0" max="23" size="2" maxlength="2">h <br />
+												<input type="submit" value="Cadastrar" />
+											</form>
+									</article>
+						</div>
+					</div>
+				</div>
+			</div>

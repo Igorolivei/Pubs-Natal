@@ -13,7 +13,8 @@ enable :sessions
 #informa qual a ação na "raiz" do site (quando tiver só o endereço mesmo. www.nomedosite.com/)
 get '/' do
 	#aponta qual o arquivo erb (html com código ruby) vai ser exibido na "raiz" do site
-	erb :inicio
+	@bares = Bares.all
+  erb :inicio
 end
 
 #informa qual a ação na página "sobre" do site (quando tiver só o endereço mesmo. www.nomedosite.com/sobre)
@@ -35,7 +36,8 @@ end
 #função que controla o método post do form bares_cadastro (na página bares_cadastro)
 post '/bares_cadastro' do
   #Cria uma nova variável do tipo "bares" e atribui os valores dos campos (params[:nome_do_campo] se refere ao campo nome_do_campo no form bares_cadastro
-  @novo_bar = Bares.new(:Nome => params[:nome], :Descricao => params[:descricao], :Endereco => params[:endereco], :Telefone => params[:telefone], :Email => params[:email], :DiasFunc => params[:diasfunc])
+  @novo_bar = Bares.new(:Nome => params[:nome], :Descricao => params[:descricao], :Endereco => params[:endereco], :Telefone => params[:telefone],
+     :Email => params[:email], :DiasFunc => params[:diasfunc], :Hinicio => params[:hinicio], :Hfim => params[:hfim])
   #salva a variável no banco
   @novo_bar.save
 
@@ -60,6 +62,8 @@ post '/bares_editar' do
   @bares.Telefone = params[:telefone_editar]
   @bares.Email = params[:email_editar]
   @bares.DiasFunc = params[:diasfunc_editar]
+  @bares.Hinicio = params[:hinicio]
+  @bares.Hfim = params[:hfim]
   @bares.save
 
   redirect '/bares_lista'
@@ -123,8 +127,6 @@ get '/logout' do
   #session.destroy para remover tudo (inclusive carrinho)
   session[:admin_logado] = nil
   session[:cliente_logado] = nil
-  session[:id_carrinho] = nil
-  session[:valor_total] = nil
   redirect '/'
 end
 
