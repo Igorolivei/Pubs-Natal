@@ -2,7 +2,8 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require './bares.rb'
 require './eventos.rb'
-#require 'file'
+require './usuarios.rb'
+require 'tempfile'
 require 'fileutils'
 
 #Faz a conexão com o banco de dados. adapter informa qual o banco de dados, e database informa o nome do arquivo do banco de dados.
@@ -13,6 +14,11 @@ enable :sessions
 #informa qual a ação na "raiz" do site (quando tiver só o endereço mesmo. www.nomedosite.com/)
 get '/' do
 	#aponta qual o arquivo erb (html com código ruby) vai ser exibido na "raiz" do site
+  if session[:admin_logado] == nil || session[:admin_logado] == [] then
+    @nome = ""
+  else
+    @nome = Usuarios.where("IdUsuario = ?", session[:admin_logado])[0].Nome
+  end
 	@bares = Bares.all
   erb :inicio
 end
@@ -40,6 +46,9 @@ post '/bares_cadastro' do
      :Email => params[:email], :DiasFunc => params[:diasfunc], :Hinicio => params[:hinicio], :Hfim => params[:hfim])
   #salva a variável no banco
   @novo_bar.save
+
+  #tempfile = params{'imagem'} [:tempfile]
+  FileUtils.cp(params{'imagem'}[:tempfile].path, "./public/#{@novo_bar.IdBar}.jpg")
 
   #redireciona para a lista de bares
   redirect '/bares_lista'
@@ -92,41 +101,36 @@ post '/admin_cadastro' do
   redirect '/'
 end
 
+get '/login' do
+  erb :login
+end
+
 post '/autenticar' do
   #TESTAR LOGIN/SENHA
   # PESQUISA SE EXISTE UM CLIENTE COM ESSE EMAIL E ESSA SENHA
-  encontrado = Usuario.where("email = ? AND senha = ?", params[:email], params[:senha])
+  @msg = ""
+  encontrado = Usuarios.where("email = ? AND senha = ?", params[:email], params[:senha])
   
   if session[:admin_logado] == nil
     session[:admin_logado] = []
   end
 
-  if session[:cliente_logado] == nil
-    session[:cliente_logado] == []
-  end
-
   if encontrado.size == 0
     # NÃO ACHOU
-    redirect '/'
+    @msg = "Email ou senha errado."
+    redirect '/login'
   else
     # ACHOU!!!!!
-    #Se é administrador
-    if encontrado[0].tipo_usuario == 0
-      session[:admin_logado] = encontrado[0].id
-    #Se é cliente
-    elsif encontrado[0].tipo_usuario == 1
-      session[:cliente_logado] = encontrado[0].id
-    else
-    redirect '/'
-    end
+    @msg = ""
+    session[:admin_logado] = encontrado[0].id
     redirect '/'
   end
+
 end
 
 get '/logout' do
   #session.destroy para remover tudo (inclusive carrinho)
   session[:admin_logado] = nil
-  session[:cliente_logado] = nil
   redirect '/'
 end
 

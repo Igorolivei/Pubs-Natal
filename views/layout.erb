@@ -33,14 +33,20 @@
 		<%# coding: UTF-8 %>
 	</head>
 	<body class="homepage">
-
 		<!-- Header -->
-			<div id="header-wrapper">
+		<div id="header-wrapper">
+				<%if session[:admin_logado] != nil && session[:admin_logado] != [] then%>
+		    		<p>Olá, <%=@nome%></p>
+				<%end%>
+				<a id="lnk_cadastro" href="/login" position="right">Área Restrita</a>
+				<%if session[:admin_logado] != nil && session[:admin_logado] != [] then%>
+		    		<a id="lnk_cadastro" href="/logout" position="right">Logout</a>
+				<%end%>
+		
 				<div id="header" style="background-image: url(/pic01.jpg) no-repeat 0 50%; height: 100%; width: 100%;">
-					
+						
 					<!-- Logo -->
 						<h1><a href="/" >Pubs Natal</a></h1>
-					
 					<!-- Nav -->
 						<nav id="nav">
 							<ul>
