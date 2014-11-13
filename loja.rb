@@ -1,4 +1,5 @@
 require 'sinatra'
+#require 'rack-flash'
 require 'sinatra/activerecord'
 require './bares.rb'
 require './eventos.rb'
@@ -14,11 +15,7 @@ enable :sessions
 #informa qual a ação na "raiz" do site (quando tiver só o endereço mesmo. www.nomedosite.com/)
 get '/' do
 	#aponta qual o arquivo erb (html com código ruby) vai ser exibido na "raiz" do site
-  if session[:admin_logado] == nil || session[:admin_logado] == [] then
-    @nome = ""
-  else
-    @nome = Usuarios.where("IdUsuario = ?", session[:admin_logado])[0].Nome
-  end
+  
 	@bares = Bares.all
   erb :inicio
 end
@@ -30,6 +27,7 @@ get '/sobre' do
 end
 
 get '/bares_lista' do
+
   @bares = Bares.all
   erb :bares_lista
 end
@@ -47,8 +45,13 @@ post '/bares_cadastro' do
   #salva a variável no banco
   @novo_bar.save
 
-  #tempfile = params{'imagem'} [:tempfile]
-  FileUtils.cp(params{'imagem'}[:tempfile].path, "./public/#{@novo_bar.IdBar}.jpg")
+  file = params[:imagem]
+  tmp = file [:tempfile]
+  #File.open('./public/' + params[:imagem][:filename], "w") do |f|
+  #  f.write(params[:imagem][:tempfile].read)
+  #end
+
+  FileUtils.cp(tmp.path, "./public/#{@novo_bar.IdBar}.jpg")
 
   #redireciona para a lista de bares
   redirect '/bares_lista'
@@ -117,11 +120,10 @@ post '/autenticar' do
 
   if encontrado.size == 0
     # NÃO ACHOU
-    @msg = "Email ou senha errado."
+    flash[:error] = "Email ou senha errado."
     redirect '/login'
   else
     # ACHOU!!!!!
-    @msg = ""
     session[:admin_logado] = encontrado[0].id
     redirect '/'
   end

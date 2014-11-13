@@ -35,12 +35,14 @@
 	<body class="homepage">
 		<!-- Header -->
 		<div id="header-wrapper">
-				<%if session[:admin_logado] != nil && session[:admin_logado] != [] then%>
+				<%if session[:admin_logado] != nil && session[:admin_logado] != [] then
+					@nome = Usuarios.where("IdUsuario = ?", session[:admin_logado])[0].Nome%>
 		    		<p>Olá, <%=@nome%></p>
 				<%end%>
-				<a id="lnk_cadastro" href="/login" position="right">Área Restrita</a>
 				<%if session[:admin_logado] != nil && session[:admin_logado] != [] then%>
 		    		<a id="lnk_cadastro" href="/logout" position="right">Logout</a>
+		    	<%else%>
+		    		<a id="lnk_cadastro" href="/login" position="right">Área Restrita</a>
 				<%end%>
 		
 				<div id="header" style="background-image: url(/pic01.jpg) no-repeat 0 50%; height: 100%; width: 100%;">
@@ -72,6 +74,9 @@
 					<div class="row">
 						<div class="12u">
 						
+							<a class="twitter-timeline" href="https://twitter.com/hashtag/bar" data-widget-id="532631633094926337">bar Tweets</a>
+							<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
 							<!-- Copyright -->
 								<div id="copyright">
 									<ul class="links">
