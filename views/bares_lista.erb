@@ -1,8 +1,10 @@
 ﻿	<div id="main-wrapper">
 				<div class="container">
 						<div class="12u">
-						<a href="/bares_cadastro" id="lnk_cadastro">Cadastrar novo bar</a></li>
-							<section>
+						<%if session[:admin_logado] != nil && session[:admin_logado] != [] then%>
+							<a href="/bares_cadastro" id="lnk_cadastro">Cadastrar novo bar</a></li>
+						<%end%>	
+						<section>
 
 
 <% if @bares != nil %>
@@ -23,13 +25,14 @@
 													<header>
 														<h3><%= bar.Nome.capitalize %></h3>
 													</header>
-													<p><%= bar.Descricao.capitalize %></p>
-													<p><b>Telefone: </b><br /><%= bar.Telefone %></p>
 													<p><b>Funcionamento: </b><br/><%= bar.DiasFunc %> das <%= bar.Hinicio %> às <%= bar.Hfim %></p>
-													<%if session[:admin_logado] != nil && session[:admin_logado] != [] then%>
-		    										<footer>
-														<a href="#" class="button alt">Leia mais...</a><br />
-															<br /><form action="/bares_editar" method="get">
+													<footer>
+														<form action="/bar_visualizar" method="get">
+															<input name="id_visualizar" value="<%=bar.IdBar%>" type="hidden"/>
+															<input type="submit" value="Leia mais..."/><br />
+														</form>
+														<%if session[:admin_logado] != nil && session[:admin_logado] != [] then%>
+		    													<br /><form action="/bares_editar" method="get">
 																<input name="id_editar" value="<%=bar.IdBar%>" type="hidden"/>
 																<input type="submit" value="Editar bar"/>
 															</form><br />
@@ -37,8 +40,8 @@
 																<input name="id_remover" value="<%=bar.IdBar%>" type="hidden"/>
 																<input type="submit" value="Remover bar"/>
 															</form><br />
+														<%end%>
 													</footer>
-													<%end%>
 												</section>
 											</div>
 										<% i += 1 %>

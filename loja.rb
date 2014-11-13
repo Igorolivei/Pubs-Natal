@@ -57,6 +57,13 @@ post '/bares_cadastro' do
   redirect '/bares_lista'
 end
 
+get '/bar_visualizar' do 
+
+  @bar = Bares.where("IdBar IN (?)", params[:id_visualizar])
+  erb :bar
+
+end
+
 get '/bares_editar' do
   #cria uma variável que recebe todos os dados da tabela bares (a classe Bares se refere à tabela bares do banco de dados)
   @bares = Bares.all
