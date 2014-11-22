@@ -19,13 +19,16 @@
 										<% @bares.each do |bar| %>
 											<div class="4u">
 												<section class="box">
-													<a href="#" class="image featured"><img src="/pic02.jpg" alt="" /></a>
+													<a href="#" class="image featured"><img src="/<%=bar.IdBar%>.jpg" alt="" /></a>
 													<header>
 														<h3><%= bar.Nome.capitalize %></h3>
 													</header>
 													<p><%= bar.Descricao.capitalize %></p>
 													<footer>
-														<a href="#" class="button alt">Leia mais...</a>
+														<form action="/bar_visualizar" method="get">
+															<input name="id_visualizar" value="<%=bar.IdBar%>" type="hidden"/>
+															<input type="submit" value="Leia mais..."/><br />
+														</form>
 													</footer>
 												</section>
 											</div>
