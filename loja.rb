@@ -77,7 +77,7 @@ post '/eventos_cadastro' do
   
   file = params['imagem']
   tmp = file[:tempfile]
-  FileUtils.cp(tmp.path, "./public/bares/#{@novo_evento.IdEvento}.jpg")
+   FileUtils.cp(tmp.path, "./public/eventos/#{@novo_evento.IdEvento}.jpg")
     
   redirect '/eventos_lista'
 end
