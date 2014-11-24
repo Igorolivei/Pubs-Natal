@@ -60,32 +60,10 @@ post '/bares_cadastro' do
   #salva a variável no banco
   @novo_bar.save
 
-  #file = params['imagem']
-  #tmp = file[:tempfile]
-  #File.open('./public/' + file[:filename], "wb") do |f|
-  #  f.write(file[:tempfile].read)
-  #end
-
-  #file_content = nil
-  #if params['imagem'].is_a?(Hash)
-  #  if params['imagem'].has_key?(:tempfile)
-  #    file_content = params['imagem'][:tempfile].read
-  #    FileUtils.cp(file_content.path, "./public/bares/#{@novo_bar.IdBar}.jpg")
-  #  end
-  #else
-  #  file_content = params['imagem']
-  #  FileUtils.cp(file_content[:tempfile].path, "./public/bares/#{@novo_bar.IdBar}.jpg")
-  #end
-
-
-  #name =  params['imagem'][:filename]
-  #directory = "./public/"
-  #path = File.join(directory, name)
-  #File.open(path, "wb") { |f| f.write(params['imagem'].read) }
-  #puts params.inspect
-  #FileUtils.mkdir_p('./Uploads/')
-  #FileUtils.mv(params['imagem'][:tempfile].path, "./Uploads/#{params['imagem'][:filename]}")
-
+  file = params['imagem']
+  tmp = file[:tempfile]
+  FileUtils.cp(tmp.path, "./public/bares/#{@novo_bar.IdBar}.jpg")
+    
   #redireciona para a lista de bares
   redirect '/bares_lista'
 end
@@ -96,7 +74,11 @@ post '/eventos_cadastro' do
     :Data => params[:data], :Hora => params[:hora], :IdBar => params[:bar])
   #salva a variável no banco
   @novo_evento.save
-
+  
+  file = params['imagem']
+  tmp = file[:tempfile]
+  FileUtils.cp(tmp.path, "./public/bares/#{@novo_evento.IdEvento}.jpg")
+    
   redirect '/eventos_lista'
 end
 

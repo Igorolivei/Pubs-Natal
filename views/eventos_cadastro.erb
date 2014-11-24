@@ -42,7 +42,7 @@
 									<header>
 										<h2>Cadastre um novo evento</h2>
 										</header>
-											<form id="myform" action="/eventos_cadastro" method="post" onSubmit="return checkdate(this.data)">
+											<form id="myform" action="/eventos_cadastro" method="post" onSubmit="return checkdate(this.data)" enctype="multipart/form-data">
 												Título: <input type="text" name="titulo"/>
 												Descrição: <textarea rows="2" name="descricao"></textarea>
 												Bar: <select name="bar" size="4" id="ListBares" multiple="multiple">
