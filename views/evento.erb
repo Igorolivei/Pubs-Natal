@@ -21,7 +21,7 @@
 										<header class="major">
 											<h3>Informações</h3>
 										</header>
-										<% if evento.IdBar == nil or evento.IdBar == [] then %>
+                              <% if evento.IdBar == nil or evento.IdBar == [] or evento.IdBar == 0 then %>
 											<p><b>Local:</b> <%=evento.Local.capitalize%></p>
 										<% else %>
 											<%= @bar = Bares.where("IdBar = ?", evento.IdBar) %>
