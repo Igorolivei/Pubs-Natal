@@ -1,0 +1,45 @@
+
+		
+		<!-- Main -->
+			<div id="main-wrapper">
+				<div class="container">
+					<div class="row">
+						<div class="12u skel-cell-important">
+							
+							<!-- Content -->
+								<article class="box post">
+									<% @eventos.each do |evento|%>
+									<a href="#" class="image featured"><img src="/eventos/<%=evento.IdEvento%>.jpg" alt="" /></a>
+									<header class="major">
+										<h2><%=evento.Titulo.capitalize%></h2>
+									</header>
+									<p>
+										<%=evento.Descricao.capitalize%>
+									</p>
+									
+									<section>
+										<header class="major">
+											<h3>Informações</h3>
+										</header>
+										<% if evento.IdBar == nil or evento.IdBar == [] then %>
+											<p><b>Local:</b> <%=evento.Local.capitalize%></p>
+										<% else %>
+											<%= @bar = Bares.where("IdBar = ?", evento.IdBar) %>
+											<% @bar.each do |bar| %>
+												<form action="/bar_visualizar" method="get">
+													<input name="id_visualizar" value="<%=bar.IdBar%>" type="hidden"/>
+													<p><b>Local:</b> <input type="submit" id="btnEventoBar" value="<%= bar.Nome.capitalize %>"/><br /></p>
+												</form>
+											<% end %>
+										<% end %>
+										<p><b>Data:</b> <%= evento.Data %></p>
+										<p><b>Hora:</b> <%= evento.Hora %>h</p>
+									</section>
+									<%end%>
+								</article>
+
+						</div>
+					</div>
+				</div>
+			</div>
+

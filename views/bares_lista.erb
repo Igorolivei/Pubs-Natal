@@ -12,6 +12,11 @@
 	<!-- O each do funciona de forma semelhante ao "for". Enquanto houver dados na lista, ele repete e lê a próxima variável (bar) da lista.-->							
 							<!-- Portfolio -->
 								<section>
+									<!--<form action="/bares_busca" method="get">
+										<input name="busca" type="text"/>
+										<input type="submit" value="Buscar" style="align: right;"/>
+									</form>-->
+									<br />
 									<header class="major">
 										<h2>Pubs e Bares</h2>
 									</header>
@@ -21,7 +26,7 @@
 										<% @bares.each do |bar| %>
 											<div class="4u">
 												<section class="box">
-													<a href="#" class="image featured"><img src="/<%=bar.IdBar%>.jpg" alt="" /></a>
+													<a href="#" class="image featured"><img src="/bares/<%=bar.IdBar%>.jpg" alt=""  height="300" width="400"/></a>
 													<header>
 														<h3><%= bar.Nome.capitalize %></h3>
 													</header>

@@ -1,0 +1,65 @@
+﻿	<div id="main-wrapper">
+				<div class="container">
+						<div class="12u">
+						<%if session[:admin_logado] != nil && session[:admin_logado] != [] then%>
+							<a href="/eventos_cadastro" id="lnk_cadastro">Cadastrar novo evento</a></li>
+						<%end%>	
+						<section>
+
+
+<% if @eventos != nil %>
+	
+	<!-- O each do funciona de forma semelhante ao "for". Enquanto houver dados na lista, ele repete e lê a próxima variável (bar) da lista.-->							
+							<!-- Portfolio -->
+								<section>
+									<br />
+									<header class="major">
+										<h2>Eventos</h2>
+									</header>
+									<% i = 0
+										while i < 3 do%>
+										<div class="row">
+										<% @eventos.each do |evento| %>
+											<div class="4u">
+												<section class="box">
+													<a href="#" class="image featured"><img src="/eventos/<%=evento.IdEvento%>.jpg" alt=""  height="300" width="400"/></a>
+													<header>
+														<h3><%= evento.Titulo.capitalize %></h3>
+													</header>
+													<p><b>Data: </b><br/><%= evento.Data %> às <%= evento.Hora %>h</p>
+													<footer>
+														<form action="/evento_visualizar" method="get">
+															<input name="id_visualizar" value="<%=evento.IdEvento%>" type="hidden"/>
+															<input type="submit" value="Leia mais..."/><br />
+														</form>
+														<%if session[:admin_logado] != nil && session[:admin_logado] != [] then%>
+		    													<br /><form action="/eventos_editar" method="get">
+																<input name="id_editar" value="<%=evento.IdEvento%>" type="hidden"/>
+																<input type="submit" value="Editar evento"/>
+															</form><br />
+															<form action="/eventos_remover" method="post">
+																<input name="id_remover" value="<%=evento.IdEvento%>" type="hidden"/>
+																<input type="submit" value="Remover evento"/>
+															</form><br />
+														<%end%>
+													</footer>
+												</section>
+											</div>
+										<% i += 1 %>
+										<% end %>
+									    </div>
+									<% end %>
+								</section>
+
+						</div>
+					</div>
+
+			
+
+							<% else %>
+								Sem eventos cadastrados.
+							<% end %>
+							</section>
+
+						</div>
+					</div>

@@ -9,7 +9,7 @@
 							<!-- Content -->
 								<article class="box post">
 									<% @bar.each do |bar|%>
-									<a href="#" class="image featured"><img src="/<%=bar.IdBar%>.jpg" alt="" /></a>
+									<a href="#" class="image featured"><img src="/bares/<%=bar.IdBar%>.jpg" alt="" /></a>
 									<header class="major">
 										<h2><%=bar.Nome.capitalize%></h2>
 									</header>
@@ -25,6 +25,35 @@
 										<p><b>Telefone:</b> <%=bar.Telefone%></p>
 										<p><b>Email:</b> <%=bar.Email%></p>
 										<p><b>Funcionamento:</b> <%= bar.DiasFunc %> das <%= bar.Hinicio %> às <%= bar.Hfim %></p>											
+									</section>
+									<section>
+										<header class="major">
+											<h3>Eventos</h3>
+										</header>
+											<div class="row">
+											<% @eventos = Eventos.where("IdBar = ?", bar.IdBar) %>
+											<% if @eventos != nil and @eventos != [] then %>
+												<% @eventos.each do |evento| %>
+													<div class="4u">
+														<section class="box">
+															<a href="#" class="image featured"><img src="/eventos/<%=evento.IdEvento%>.jpg" alt=""  height="300" width="400"/></a>
+															<header>
+																<h3><%= evento.Titulo.capitalize %></h3>
+															</header>
+															<p><b>Data: </b><br/><%= evento.Data %> às <%= evento.Hora %>h</p>
+															<footer>
+																<form action="/evento_visualizar" method="get">
+																	<input name="id_visualizar" value="<%=evento.IdEvento%>" type="hidden"/>
+																	<input type="submit" value="Leia mais..."/>
+																</form>
+															</footer>
+														</section>
+													</div>
+												<% end %>
+											<% else %>
+												Sem eventos para este local.
+											<% end %>
+											</div>
 									</section>
 									<%end%>
 								</article>

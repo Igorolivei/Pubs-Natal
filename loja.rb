@@ -1,5 +1,4 @@
 require 'sinatra'
-#require 'rack-flash'
 require 'sinatra/activerecord'
 require './bares.rb'
 require './eventos.rb'
@@ -10,13 +9,16 @@ require 'fileutils'
 #Faz a conexão com o banco de dados. adapter informa qual o banco de dados, e database informa o nome do arquivo do banco de dados.
 ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => './bares.db')
 
-enable :sessions
+use Rack::Session::Cookie
+#enable :sessions
 
 #informa qual a ação na "raiz" do site (quando tiver só o endereço mesmo. www.nomedosite.com/)
 get '/' do
 	#aponta qual o arquivo erb (html com código ruby) vai ser exibido na "raiz" do site
   
 	@bares = Bares.all
+	@eventos = Eventos.all
+
   erb :inicio
 end
 
@@ -32,9 +34,21 @@ get '/bares_lista' do
   erb :bares_lista
 end
 
+get '/eventos_lista' do
+
+  @eventos = Eventos.all
+  erb :eventos_lista
+end
+
 get '/bares_cadastro' do
   @bares = Bares.all
   erb :bares_cadastro
+end
+
+get '/eventos_cadastro' do
+  @eventos = Eventos.all
+  @bares = Bares.all
+  erb :eventos_cadastro
 end
 
 #função que controla o método post do form bares_cadastro (na página bares_cadastro)
@@ -45,16 +59,44 @@ post '/bares_cadastro' do
   #salva a variável no banco
   @novo_bar.save
 
-  file = params[:imagem]
-  tmp = file [:tempfile]
-  #File.open('./public/' + params[:imagem][:filename], "w") do |f|
-  #  f.write(params[:imagem][:tempfile].read)
+  #file = params['imagem']
+  #tmp = file[:tempfile]
+  #File.open('./public/' + file[:filename], "wb") do |f|
+  #  f.write(file[:tempfile].read)
   #end
 
-  FileUtils.cp(tmp.path, "./public/#{@novo_bar.IdBar}.jpg")
+  #file_content = nil
+  #if params['imagem'].is_a?(Hash)
+  #  if params['imagem'].has_key?(:tempfile)
+  #    file_content = params['imagem'][:tempfile].read
+  #    FileUtils.cp(file_content.path, "./public/bares/#{@novo_bar.IdBar}.jpg")
+  #  end
+  #else
+  #  file_content = params['imagem']
+  #  FileUtils.cp(file_content[:tempfile].path, "./public/bares/#{@novo_bar.IdBar}.jpg")
+  #end
+
+
+  #name =  params['imagem'][:filename]
+  #directory = "./public/"
+  #path = File.join(directory, name)
+  #File.open(path, "wb") { |f| f.write(params['imagem'].read) }
+  #puts params.inspect
+  #FileUtils.mkdir_p('./Uploads/')
+  #FileUtils.mv(params['imagem'][:tempfile].path, "./Uploads/#{params['imagem'][:filename]}")
 
   #redireciona para a lista de bares
   redirect '/bares_lista'
+end
+
+post '/eventos_cadastro' do
+  #Cria uma nova variável do tipo "bares" e atribui os valores dos campos (params[:nome_do_campo] se refere ao campo nome_do_campo no form bares_cadastro
+  @novo_evento = Eventos.new(:Titulo => params[:titulo], :Descricao => params[:descricao], :Local => params[:local], 
+    :Data => params[:data], :Hora => params[:hora], :IdBar => params[:bar])
+  #salva a variável no banco
+  @novo_evento.save
+
+  redirect '/eventos_lista'
 end
 
 get '/bar_visualizar' do 
@@ -64,12 +106,28 @@ get '/bar_visualizar' do
 
 end
 
+get '/evento_visualizar' do 
+
+  @eventos = Eventos.where("IdEvento IN (?)", params[:id_visualizar])
+  erb :evento
+
+end
+
 get '/bares_editar' do
   #cria uma variável que recebe todos os dados da tabela bares (a classe Bares se refere à tabela bares do banco de dados)
   @bares = Bares.all
   #pesquisa um dado específico (onde o if for params[:id_editar], que é um campo oculto no html
   @bares_editar = Bares.where("IdBar IN (?)", params[:id_editar])
   erb :bares_editar
+end
+
+get '/eventos_editar' do
+  #cria uma variável que recebe todos os dados da tabela bares (a classe Bares se refere à tabela bares do banco de dados)
+  @eventos = Eventos.all
+  @bares = Bares.all
+  #pesquisa um dado específico (onde o if for params[:id_editar], que é um campo oculto no html
+  @eventos_editar = Eventos.where("IdEvento IN (?)", params[:id_editar])
+  erb :eventos_editar
 end
 
 post '/bares_editar' do
@@ -88,11 +146,33 @@ post '/bares_editar' do
   redirect '/bares_lista'
 end
 
+post '/eventos_editar' do
+
+  @eventos = Eventos.find(params[:id_editar])
+  @eventos.Titulo = params[:titulo_editar]
+  @eventos.Descricao = params[:descricao_editar]
+  @eventos.Local = params[:local_editar]
+  @eventos.Data = params[:data_editar]
+  @eventos.Hora = params[:hora_editar]
+  @eventos.IdBar = params[:bar_editar]
+  @eventos.save
+
+  redirect '/eventos_lista'
+
+end
+
 post '/bares_remover' do
   #procura o dado pelo id, e exclui permanentemente da tabela
   @bares = Bares.find(params[:id_remover]).destroy
 
   redirect '/bares_lista'
+end
+
+post '/eventos_remover' do
+  #procura o dado pelo id, e exclui permanentemente da tabela
+  @eventos = Eventos.find(params[:id_remover]).destroy
+
+  redirect '/eventos_lista'
 end
 
 get '/admin_cadastro' do
@@ -127,7 +207,6 @@ post '/autenticar' do
 
   if encontrado.size == 0
     # NÃO ACHOU
-    flash[:error] = "Email ou senha errado."
     redirect '/login'
   else
     # ACHOU!!!!!

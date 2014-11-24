@@ -1,0 +1,37 @@
+<%if session[:admin_logado] != nil && session[:admin_logado] != [] then%>
+			<div id="main-wrapper">
+				<div class="container">
+					<div class="row">
+						<div class="8u">
+							<!-- Content -->
+								<article class="box post">
+									<a href="#" class="image featured"><img src="/pic01.jpg" alt="" /></a>
+									<header>
+										<h2>Edite um evento</h2>
+										</header>
+											<% @eventos_editar.each do |evento| %>
+											<form action="/bares_editar" method="post" >
+												<input name="id_editar" value="<%=evento.IdEvento%>" type="hidden" />
+												Título: <input type="text" name="titulo_editar" value="<%=evento.Titulo.capitalize%>"/>
+												Descrição: <textarea rows="2" name="descricao_editar"><%=evento.Descricao.capitalize%></textarea>
+												Bar: <select value="<%=evento.IdBar%>" name="bar_editar" size="4" id="ListBares" multiple="multiple">
+										                <option value="0" >Selecione </option>
+										                <% @bares.each do |bar| %>
+										                	<% if (bar.IdBar == evento.IdBar) then %>
+										                		<option value="<%=bar.IdBar%>" selected="selected"><%= bar.Nome.capitalize%></option>
+										                	<% else %>
+										                		<option value="<%=bar.IdBar%>"><%= bar.Nome.capitalize%></option>
+										                	<% end %>
+										                <% end %>
+										            </select>
+												Local: <input value="<%=evento.Local%>" id="localtext" type="text" name="local_editar"/>
+												Data: <input value="<%=evento.Data%>" id="data" type="text" name="data_editar" placeholder="DD/MM/AAAA" maxlength="10" onKeyPress="MascaraData(this);"/>
+												Horário: <input value="<%=evento.Hora%>" type="number" name="hora_editar" min="0" max="23" size="2" maxlength="2" onkeypress='return SomenteNumero(event)'>h<br />
+												<input type="submit" value="Cadastrar" />											</form>
+											<% end %>
+								</article>
+						</div>
+					</div>
+				</div>
+			</div>
+<%end%>

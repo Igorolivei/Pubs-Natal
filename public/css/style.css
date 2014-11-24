@@ -311,7 +311,7 @@
 			border: 0;
 			border-radius: 5px;
 			background: #d52349;
-			color: #fff !important;
+			color: #fff ;
 			font-weight: 700;
 			outline: 0;
 			-moz-transition: background-color .25s ease-in-out;
@@ -851,4 +851,18 @@
 	{
 		text-align: right;
 		float: right;
+	}
+
+	#btnEventoBar
+	{
+	    overflow:visible; /* Shrinkwrap the text in IE7- */
+	    margin:0;
+	    padding:0;
+	    border:0;
+	    color:#8f1f08; /* Match your link colour */
+	    background:transparent;
+	    font:inherit; /* Inherit font settings (doesn’t work in IE7-) */
+	    line-height:normal; /* Override line-height to avoid spacing issues */
+	    text-decoration:underline; /* Make it look linky */
+	    cursor:pointer; /* Buttons don’t make the cursor change in all browsers */
 	}

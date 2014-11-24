@@ -9,6 +9,7 @@
 <html>
 	<head>
 		<title>Pubs Natal</title>
+		<link rel="shortcut icon" type="image/x-icon" href="./public/beer.jpg" />
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
@@ -29,6 +30,65 @@
 			    document.getElementById("div"+element.id).className = "current";
 			    
 			}
+			function SomenteNumero(e){
+			    var tecla=(window.event)?event.keyCode:e.which;   
+			    if((tecla>47 && tecla<58)) return true;
+			    else{
+			    	if (tecla==8 || tecla==0) return true;
+				else  return false;
+			    }
+			}
+			function formataCampo(campo, Mascara, evento) { 
+				var boleanoMascara; 
+				
+				var Digitato = evento.keyCode;
+				exp = /\-|\.|\/|\(|\)| /g
+				campoSoNumeros = campo.value.toString().replace( exp, "" ); 
+			   
+				var posicaoCampo = 0;	 
+				var NovoValorCampo="";
+				var TamanhoMascara = campoSoNumeros.length;; 
+				
+				if (Digitato != 8) { // backspace 
+					for(i=0; i<= TamanhoMascara; i++) { 
+						boleanoMascara  = ((Mascara.charAt(i) == "-") || (Mascara.charAt(i) == ".")
+											|| (Mascara.charAt(i) == "/")) 
+						boleanoMascara  = boleanoMascara || ((Mascara.charAt(i) == "(") 
+											|| (Mascara.charAt(i) == ")") || (Mascara.charAt(i) == " ")) 
+						if (boleanoMascara) { 
+							NovoValorCampo += Mascara.charAt(i); 
+							  TamanhoMascara++;
+						}else { 
+							NovoValorCampo += campoSoNumeros.charAt(posicaoCampo); 
+							posicaoCampo++; 
+						  }	   	 
+					  }	 
+					campo.value = NovoValorCampo;
+					  return true; 
+				}else { 
+					return true; 
+				}
+			}
+
+		function mascaraInteiro(){
+			if (event.keyCode < 48 || event.keyCode > 57){
+				event.returnValue = false;
+				return false;
+			}
+			return true;
+		}
+		function MascaraData(data){
+			if(mascaraInteiro(data)==false){
+				event.returnValue = false;
+			}	
+			return formataCampo(data, '00/00/0000', event);
+		}
+		function MascaraTelefone(telefone){
+			if(mascaraInteiro(telefone)==false){
+				event.returnValue = false;
+			}
+			return formataCampo(telefone, '(000)0000-0000', event)
+		}
 		</script>
 		<%# coding: UTF-8 %>
 	</head>
@@ -52,9 +112,9 @@
 					<!-- Nav -->
 						<nav id="nav">
 							<ul>
-								<li id="divinicio"><a id="inicio" onclick="selectLoad(this)" href="/">Inicio</a></li>
+								<li id="divinicio"><a id="inicio" onclick="selectLoad(this)" href="/">Início</a></li>
 								<li id="divlista"><a id="lista" onclick="selectLoad(this)" href="/bares_lista">Pubs e Bares</a></li>
-								<!--<li id="login"><a href="no-sidebar.html">Login</a></li>-->
+								<li id="divevento"><a id="evento" onclick="selectLoad(this)" href="/eventos_lista">Eventos</a></li>
 								<li id="divsobre"><a id="sobre" onclick="selectLoad(this)" href="/sobre">Sobre</a></li>
 							</ul>
 						</nav>

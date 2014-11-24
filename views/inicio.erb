@@ -8,18 +8,17 @@
 							
 							<!-- Portfolio -->
 								<section>
+									<a href="#" class="image featured"><img src="/pic01.jpg" alt="" /></a>
 									<header class="major">
 										<h2>Pubs e Bares</h2>
 									</header>
-									<a href="#" class="image featured"><img src="/pic01.jpg" alt="" /></a>
 									
-						
 									<% i = 0 %>
 										<div class="row">
 										<% @bares.each do |bar| %>
 											<div class="4u">
 												<section class="box">
-													<a href="#" class="image featured"><img src="/<%=bar.IdBar%>.jpg" alt="" /></a>
+													<a href="#" class="image featured"><img src="/bares/<%=bar.IdBar%>.jpg" alt="" height="300" width="400"/></a>
 													<header>
 														<h3><%= bar.Nome.capitalize %></h3>
 													</header>
@@ -33,7 +32,7 @@
 												</section>
 											</div>
 										<% i += 1 %>
-										<% if i >= 5 then break end %>
+										<% if i > 5 then break end %>
 										<% end %>
 									    </div>
 								</section>
@@ -47,43 +46,30 @@
 								<section>
 									<header class="major">
 										<h2>Eventos</h2>
-									</header>
-									<div class="row">
-										<div class="6u">
-											<section class="box">
-												<a href="#" class="image featured"><img src="/pic08.jpg" alt="" /></a>
-												<header>
-													<h3>evento 1</h3>
-													<p>Posted 45 minutes ago</p>
-												</header>
-												<p>texto do evento 1.</p>
-												<footer>
-													<ul class="actions">
-														<li><a href="#" class="button icon fa-file-text">Continue lendo</a></li>
-														<!--<li><a href="#" class="button alt icon fa-comment">33 comments</a></li>-->
-													</ul>
-												</footer>
-											</section>
-										</div>
-										<div class="6u">
-											<section class="box">
-												<a href="#" class="image featured"><img src="/pic09.jpg" alt="" /></a>
-												<header>
-													<h3>Evento 2</h3>
-													<p>Posted 45 minutes ago</p>
-												</header>
-												<p>texto do evento 2.</p>
-												<footer>
-													<ul class="actions">
-														<li><a href="#" 
-
-class="button icon fa-file-text">Continue lendo</a></li>
-														<!--<li><a href="#" class="button alt icon fa-comment">33 comments</a></li>-->
-													</ul>
-												</footer>
-											</section>
-										</div>
-									</div>
+									</header>									
+						
+									<% i = 0 %>
+										<div class="row">
+										<% @eventos.each do |evento| %>
+											<div class="4u">
+												<section class="box">
+													<a href="#" class="image featured"><img src="/eventos/<%=evento.IdEvento%>.jpg" alt=""  height="300" width="400" /></a>
+													<header>
+														<h3><%= evento.Titulo.capitalize %></h3>
+													</header>
+													<p><%= evento.Descricao.capitalize %></p>
+													<footer>
+														<form action="/evento_visualizar" method="get">
+															<input name="id_visualizar" value="<%=evento.IdEvento%>" type="hidden"/>
+															<input type="submit" value="Leia mais..."/><br />
+														</form>
+													</footer>
+												</section>
+											</div>
+										<% i += 1 %>
+										<% if i > 5 then break end %>
+										<% end %>
+									    </div>
 								</section>
 							
 						</div>
