@@ -10,7 +10,7 @@
 										<h2>Edite um evento</h2>
 										</header>
 											<% @eventos_editar.each do |evento| %>
-											<form action="/bares_editar" method="post" >
+											<form action="/eventos_editar" method="post" >
 												<input name="id_editar" value="<%=evento.IdEvento%>" type="hidden" />
 												Título: <input type="text" name="titulo_editar" value="<%=evento.Titulo.capitalize%>"/>
 												Descrição: <textarea rows="2" name="descricao_editar"><%=evento.Descricao.capitalize%></textarea>
